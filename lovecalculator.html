@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 50px;
+        }
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Love Calculator</h1>
+    <form id="loveCalculatorForm">
+        <label for="yourName">Your Name:</label>
+        <input type="text" id="yourName" name="yourName" required><br><br>
+        <label for="partnerName">Partner's Name:</label>
+        <input type="text" id="partnerName" name="partnerName" required><br><br>
+        <button type="submit">Calculate</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('loveCalculatorForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var yourName = document.getElementById('yourName').value.trim().toLowerCase();
+            var partnerName = document.getElementById('partnerName').value.trim().toLowerCase();
+            var loveScore = calculateLoveScore(yourName, partnerName);
+            displayResult(loveScore);
+        });
+
+        function calculateLoveScore(name1, name2) {
+            var totalLetters = (name1.length + name2.length);
+            var commonLetters = 0;
+            for (var i = 0; i < name1.length; i++) {
+                for (var j = 0; j < name2.length; j++) {
+                    if (name1[i] === name2[j]) {
+                        commonLetters++;
+                        name2 = name2.substring(0, j) + name2.substring(j + 1);
+                        break;
+                    }
+                }
+            }
+            return Math.round((commonLetters / totalLetters) * 100);
+        }
+
+        function displayResult(score) {
+            var resultDiv = document.getElementById('result');
+            if (score >= 80) {
+                resultDiv.innerText = 'Congratulations! You are a perfect match! ❤️';
+            } else if (score >= 60) {
+                resultDiv.innerText = 'You are compatible. 💑';
+            } else if (score >= 40) {
+                resultDiv.innerText = 'You have potential. Keep working on it. 😉';
+            } else {
+                resultDiv.innerText = 'Hmm...maybe you need to put in more effort. 😔';
+            }
+        }
+    </script>
+</body>
+</html>
